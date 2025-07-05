@@ -8,19 +8,18 @@ from skimage.transform import resize
 import requests
 import io
 
-# Load model from Google Drive
+# ✅ Load the model from GitHub
 @st.cache_resource
-def load_model_from_drive():
-    file_id = "18R-rfsqlC9P2WLujuFyGxF13KYlWcqRq"
-    url = f"https://drive.google.com/uc?export=download&id={file_id}"
+def load_model_from_github():
+    url = "https://raw.githubusercontent.com/Harshit1983/cat-dog-classifier/main/svm_hog_cat_dog_model.pkl"
     response = requests.get(url)
     model = joblib.load(io.BytesIO(response.content))
     return model
 
-model = load_model_from_drive()
+model = load_model_from_github()
 st.success("✅ Model loaded successfully.")
 
-# Custom style
+# 🌸 Custom UI Style
 st.markdown("""
     <style>
         .reportview-container {
@@ -38,28 +37,31 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
+# 🐾 App Title
 st.title("🐾 Cat vs Dog Classifier")
 st.subheader("Upload an image to know if it's a 🐱 Cat or 🐶 Dog")
 
+# 📷 Upload file
 uploaded_file = st.file_uploader("Upload Image", type=["jpg", "jpeg", "png"])
 
 if uploaded_file:
     image = Image.open(uploaded_file).convert("RGB")
     st.image(image, caption="Uploaded Image", use_column_width=True)
 
-    # Resize and process
+    # 🧠 Preprocessing
     image_resized = resize(np.array(image), (64, 64))
     gray_image = rgb2gray(image_resized)
-    features, _ = hog(gray_image,
-                      orientations=9,
-                      pixels_per_cell=(8, 8),
-                      cells_per_block=(2, 2),
-                      block_norm='L2-Hys',
-                      visualize=True)
-
+    features, _ = hog(
+        gray_image,
+        orientations=9,
+        pixels_per_cell=(8, 8),
+        cells_per_block=(2, 2),
+        block_norm='L2-Hys',
+        visualize=True
+    )
     features = features.reshape(1, -1)
 
-    # Prediction
+    # 🤖 Prediction
     prediction = model.predict(features)[0]
     confidence = model.decision_function(features)[0]
     margin = abs(confidence)
