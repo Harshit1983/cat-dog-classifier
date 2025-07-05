@@ -1,15 +1,6 @@
-<<<<<<< HEAD
 streamlit
 scikit-learn
 scikit-image
 pillow
 joblib
 numpy
-=======
-streamlit
-scikit-learn
-scikit-image
-pillow
-joblib
-numpy
->>>>>>> ee9fb72f00d2509360271c6c3021f4394156f285
