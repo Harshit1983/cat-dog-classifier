@@ -66,7 +66,7 @@ if uploaded_file:
     confidence = model.decision_function(features)[0]
     margin = abs(confidence)
 
-    if margin < 0.3:
+    if margin < 0.2:
         st.warning("⚠️ Hmm... this image doesn't look like a cat or dog.\nAre you trying to test Shree? 😅")
         st.info("Tip: Please upload a **clear cat or dog image** for accurate prediction.")
     else:
