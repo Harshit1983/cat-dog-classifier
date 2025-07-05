@@ -15,9 +15,10 @@ import streamlit as st
 @st.cache_resource
 def load_model_from_drive():
     file_id = "18R-rfsqlC9P2WLujuFyGxF13KYlWcqRq"
-    url = f"https://drive.google.com/uc?export=download&id={file_id}"
-    response = requests.get(url)
-    model = joblib.load(io.BytesIO(response.content))
+url = f"https://drive.google.com/uc?export=download&id={file_id}"
+response = requests.get(url)
+model = joblib.load(io.BytesIO(response.content))
+   
     return model
 
 model = load_model_from_drive()
