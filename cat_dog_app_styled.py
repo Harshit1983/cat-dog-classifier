@@ -18,7 +18,11 @@ def load_model_from_drive():
 url = f"https://drive.google.com/uc?export=download&id={file_id}"
 response = requests.get(url)
 model = joblib.load(io.BytesIO(response.content))
+<<<<<<< HEAD
     
+=======
+   
+>>>>>>> ee9fb72f00d2509360271c6c3021f4394156f285
     return model
 
 model = load_model_from_drive()
