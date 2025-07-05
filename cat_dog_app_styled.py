@@ -5,28 +5,19 @@ from PIL import Image
 from skimage.feature import hog
 from skimage.color import rgb2gray
 from skimage.transform import resize
-
-# Load the model
 import requests
-import joblib
 import io
-import streamlit as st
 
+# Load model from Google Drive
 @st.cache_resource
 def load_model_from_drive():
     file_id = "18R-rfsqlC9P2WLujuFyGxF13KYlWcqRq"
-url = f"https://drive.google.com/uc?export=download&id={file_id}"
-response = requests.get(url)
-model = joblib.load(io.BytesIO(response.content))
-<<<<<<< HEAD
-    
-=======
-   
->>>>>>> ee9fb72f00d2509360271c6c3021f4394156f285
+    url = f"https://drive.google.com/uc?export=download&id={file_id}"
+    response = requests.get(url)
+    model = joblib.load(io.BytesIO(response.content))
     return model
 
 model = load_model_from_drive()
-
 st.success("✅ Model loaded successfully.")
 
 # Custom style
@@ -70,8 +61,6 @@ if uploaded_file:
 
     # Prediction
     prediction = model.predict(features)[0]
-
-    # Shree-style fun logic
     confidence = model.decision_function(features)[0]
     margin = abs(confidence)
 
